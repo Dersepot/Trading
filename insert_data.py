@@ -1,9 +1,7 @@
 #!/usr/bin/python
 import os
 import psycopg2
-import paramiko
 from datetime import datetime
-#from sshtunnel import SSHTunnelForwarder
 from binance.client import Client
 from binance.websockets import BinanceSocketManager
 
@@ -30,7 +28,7 @@ def insert(new_row):
     sql = '''INSERT INTO etheur(event_type, event_time, symbol, start_time, end_time, open, close, high, low, 
     volume) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) 
     ON CONFLICT (start_time) DO UPDATE SET close = EXCLUDED.close, high = EXCLUDED.high, low = EXCLUDED.low , 
-    volume = EXCLUDED.volume '''
+    volume = EXCLUDED.volume, event_time = EXCLUDE.event_time '''
     conn = None
 
     try:
