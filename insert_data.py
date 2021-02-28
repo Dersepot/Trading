@@ -28,7 +28,7 @@ def insert(new_row):
     sql = '''INSERT INTO etheur(event_type, event_time, symbol, start_time, end_time, open, close, high, low, 
     volume) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) 
     ON CONFLICT (start_time) DO UPDATE SET close = EXCLUDED.close, high = EXCLUDED.high, low = EXCLUDED.low , 
-    volume = EXCLUDED.volume, event_time = EXCLUDE.event_time '''
+    volume = EXCLUDED.volume, event_time = EXCLUDED.event_time '''
     conn = None
 
     try:
