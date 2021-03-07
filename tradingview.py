@@ -92,7 +92,7 @@ if __name__ == '__main__':
     while True:
         # Check if there is money in binance
         money = get_money()
-        if get_money() > 0:
+        if money > 0.0:
             # If "Buy" or "Strong Buy"
             if get_etheur_buy():
                 buy.main(asset, money)
