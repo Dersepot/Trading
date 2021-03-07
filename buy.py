@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
-import os
-import sys
-from decimal import Decimal
 
+# Takes arguments "asset" and "order_size"
+# Buys for money order_size quantity of asset for current price
+# Writes the order into table current
+
+import os
 import paramiko
 import psycopg2
+from decimal import Decimal
 from sshtunnel import SSHTunnelForwarder
 from binance.client import Client
 
+# TODO: Check if enough money to buy
+# TODO: Transaction Costs
 
 def current_price(asset):
     api_key = os.environ.get('binance_api')
@@ -59,5 +64,6 @@ if __name__ == '__main__':
     order_size = 100  # sys.argv[2]
     price = Decimal(current_price(asset)['price'])
     quantity = order_size / price
+    # TODO: Give oder to Binance
     update_db(asset, quantity, price)
     print("Bought %s of '%s'" % (quantity, asset))
