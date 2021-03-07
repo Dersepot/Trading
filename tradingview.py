@@ -13,18 +13,24 @@ from sshtunnel import SSHTunnelForwarder
 
 def get_connection():
     try:
-        mypkey = paramiko.RSAKey.from_private_key_file('/home/acadoga/.ssh/netcup')
+        # mypkey = paramiko.RSAKey.from_private_key_file('/home/acadoga/.ssh/netcup')
+        #
+        # tunnel = SSHTunnelForwarder(
+        #     ("v2202011116930133496.megasrv.de", 22),
+        #     ssh_username="vj",
+        #     ssh_pkey=mypkey,
+        #     remote_bind_address=('localhost', 5432))
+        #
+        # tunnel.start()
+        #
+        # return psycopg2.connect(dbname='Trading', user="postgres", password="postgres", host='127.0.0.1',
+        #                         port=tunnel.local_bind_port)
+        return psycopg2.connect(
+            host="localhost",
+            database="Trading",
+            user="postgres",
+            password="postgres")
 
-        tunnel = SSHTunnelForwarder(
-            ("v2202011116930133496.megasrv.de", 22),
-            ssh_username="vj",
-            ssh_pkey=mypkey,
-            remote_bind_address=('localhost', 5432))
-
-        tunnel.start()
-
-        return psycopg2.connect(dbname='Trading', user="postgres", password="postgres", host='127.0.0.1',
-                                port=tunnel.local_bind_port)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 
