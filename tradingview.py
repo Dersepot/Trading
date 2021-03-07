@@ -43,7 +43,7 @@ def get_money():
         money = cur.fetchone()
         cur.close()
         conn.commit()
-        return money[0].apply(Decimal)
+        return Decimal(money[0])
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
