@@ -91,7 +91,7 @@ if __name__ == '__main__':
     asset = 'ETHEUR'
     while True:
         # Check if there is money in binance
-        money = get_money()
+        money = get_money() or 0 # TODO: Is this clean?
         if money > 0.0:
             # If "Buy" or "Strong Buy"
             if get_etheur_buy():
