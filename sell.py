@@ -82,8 +82,8 @@ def delete_current(asset):
             conn.close()
 
 
-if __name__ == '__main__':
-    asset = 'ETHEUR'
+def main(asset):
+    # asset = sys.argv[1]
     # Check if Asset in table current
     bought_asset = get_asset(asset)
     if bought_asset is None:

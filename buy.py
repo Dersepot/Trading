@@ -5,11 +5,15 @@
 # Writes the order into table current
 
 import os
+import sys
+from datetime import datetime
+
 import paramiko
 import psycopg2
 from decimal import Decimal
 from sshtunnel import SSHTunnelForwarder
 from binance.client import Client
+
 
 # TODO: Check if enough money to buy
 # TODO: Transaction Costs
@@ -39,11 +43,9 @@ def update_db(asset, quantity, price):
 
         cur = conn.cursor()
 
-        cur.execute(''' SELECT start_time FROM %s ORDER BY start_time DESC LIMIT 1 ''' % asset)
-        date = cur.fetchone()
-        order = (date, asset, price, quantity)
+        time = datetime.now()
         sql = '''INSERT INTO current(time, asset, buy_price, quantity) VALUES(%s,%s,%s,%s) '''
-        cur.execute(sql, order)
+        cur.execute(sql, (time, asset, price, quantity))
 
         cur.close()
         # commit the changes
@@ -55,13 +57,13 @@ def update_db(asset, quantity, price):
             conn.close()
 
 
-if __name__ == '__main__':
+def main(asset, order_size):
     # get current price for asset
     # calculate how many crypto you can buy for that
     # place order -> How hight are the fees? Is the account covered?
     # put in table current
-    asset = "ETHEUR"  # sys.argv[1]
-    order_size = 100  # sys.argv[2]
+    # asset = sys.argv[1]  # "ETHEUR"
+    # order_size = sys.argv[2]  # 100
     price = Decimal(current_price(asset)['price'])
     quantity = order_size / price
     # TODO: Give oder to Binance
