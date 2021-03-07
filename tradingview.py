@@ -37,7 +37,7 @@ def get_money():
         money = cur.fetchone()
         cur.close()
         conn.commit()
-        return money[0]
+        return money[0].apply(Decimal)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -91,8 +91,7 @@ if __name__ == '__main__':
     asset = 'ETHEUR'
     while True:
         # Check if there is money in binance
-        money_float = get_money()
-        money = Decimal(money_float)
+        money = get_money()
         if get_money() > 0:
             # If "Buy" or "Strong Buy"
             if get_etheur_buy():
